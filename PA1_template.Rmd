@@ -9,7 +9,7 @@ output:
 ## Loading and preprocessing the data
 Make sure the dataset is in your working directory before reading in the file
 
-```{r Read Data, echo = TRUE} 
+```{r Read_Data, echo = TRUE} 
 dataset <- read.csv("activity.csv")
 library(ggplot2)
 library(RColorBrewer)
@@ -18,18 +18,18 @@ library(RColorBrewer)
 
 ## What is mean total number of steps taken per day?
 ### To calculate total number of steps per day
-```{r Calculate Total Steps, echo = TRUE}
+```{r Calculate_Total_Steps, echo = TRUE}
 totalstepsperday <- tapply(dataset$steps, dataset$date, sum)
 as.data.frame(totalstepsperday)
 ```
 
 ### Histogram for total number of steps per day
-```{r Histogram Total Steps, echo = TRUE}
+```{r Histogram_Total_Steps, echo = TRUE}
 hist(totalstepsperday, breaks = 10, xlab = "Number of Steps", ylab = "Frequency", main = "Total Steps Taken Per Day", col = colorRampPalette(brewer.pal(5, "Greens"))(11))
 ```
 
 ### To calculate mean and median number of steps per day
-```{r Mean and Median Total Steps, echo = TRUE}
+```{r Mean_and_Median_Total_Steps, echo = TRUE}
 meansteps <- mean(totalstepsperday, na.rm = TRUE)
 meansteps
 mediansteps <- median(totalstepsperday, na.rm = TRUE)
@@ -40,7 +40,7 @@ mediansteps
 ### To plot average number of steps for each time interval across all days
 Need to make dataset$interval into a factor in order to tapply across those groups.
 Removed all NA values prior to tapply.
-```{r Time-series Plot of Average Steps Across Intervals, echo = TRUE}
+```{r Time-series_Plot_of_Average_Steps_Across_Intervals, echo = TRUE}
 dataset$interval <- as.factor(dataset$interval)
 cleandata <- dataset[!is.na(dataset$steps), ]
 avgstepsperday <- tapply(cleandata$steps, cleandata$interval, mean)
@@ -49,7 +49,7 @@ plot(as.numeric(names(avgstepsperday)), avgstepsperday, type = "l", xlab = "Inte
 
 ### Which 5-min interval contains the maximum number of steps on average?
 maxavgsteps gives the max of the interval and maxavgstepsinterval gives the interval in which that max occurs (second number (104) in maxavgstepsinterval gives the factor number the 835 interval is at).
-```{r Maximum Steps on Average, echo = TRUE}
+```{r Maximum_Steps_on_Average, echo = TRUE}
 maxavgsteps <- max(avgstepsperday)
 maxavgsteps
 maxavgstepsinterval <- which.max(avgstepsperday)
@@ -58,13 +58,13 @@ maxavgstepsinterval
 
 ## Imputing missing values
 ### Calculate total number of missing values
-```{r How many NAs, echo = TRUE}
+```{r How_many_NAs, echo = TRUE}
 sum(is.na(dataset))
 ```
 
 ### Fill in the missing values into the dataset; filled in by average of the 5-min interval
 Checked that there were no more NAs at the end if the for loop.
-```{r Imputting NAs, echo = TRUE}
+```{r Imputting_NAs, echo = TRUE}
 datasetsplit <- split(dataset, dataset$interval)
 for(i in 1:length(datasetsplit)) {
   datasetsplit[[i]]$steps[is.na(datasetsplit[[i]]$steps)] <- avgstepsperday[i]
@@ -74,7 +74,7 @@ sum(is.na(filledindata))
 ```
 
 ### Histogram of total number of steps per day with NA values filled in
-```{r Histogram with NAs Imputted, echo = TRUE}
+```{r Histogram_with_NAs_Imputted, echo = TRUE}
 par(mfrow = c(1,2))
 newtotalstepsperday <- tapply(filledindata$steps, filledindata$date, sum)
 hist(totalstepsperday, breaks = 10, xlab = "Number of Steps", ylab = "Frequency", main = "Activity Data without NAs Imputted", col = colorRampPalette(brewer.pal(5, "Greens"))(11))
@@ -82,7 +82,7 @@ hist(newtotalstepsperday, breaks = 10, xlab = "Number of Steps", ylab = "Frequen
 ```
 
 ### To calculate new mean and median total number of steps per day
-```{r New Mean and Median Total Steps, echo = TRUE}
+```{r New_Mean_and_Median_Total_Steps, echo = TRUE}
 newmeansteps <- mean(newtotalstepsperday, na.rm = TRUE)
 newmeansteps
 newmediansteps <- median(newtotalstepsperday, na.rm = TRUE)
@@ -91,7 +91,7 @@ newmediansteps
 
 ## Are there differences in activity patterns between weekdays and weekends?
 ### Create a new factor in the dataset for weekday vs. weekend
-```{r Add column for weekday vs. weekend, echo = TRUE}
+```{r Add_column_for_weekday_vs_weekend, echo = TRUE}
 filledindata$date <- as.Date(filledindata$date)
 for(i in 1:nrow(filledindata)) {
   if (weekdays(filledindata$date[i]) == "Saturday" | weekdays(filledindata$date[i]) == "Sunday") {
@@ -104,7 +104,7 @@ for(i in 1:nrow(filledindata)) {
 ```
 
 ### Time series plot of average number of steps taken in 5-minute interval based on weekday vs. weekend
-```{r Time Series Plot of Weekday vs. Weekend, echo = TRUE}
+```{r Time_Series_Plot_of_Weekday_vs_Weekend, echo = TRUE}
 dataWeekday <- subset(filledindata, filledindata$weekday == "weekday")
 dataWeekend <- subset(filledindata, filledindata$weekday == "weekend")
 avgstepsperweekday <- tapply(dataWeekday$steps, dataWeekday$interval, mean)

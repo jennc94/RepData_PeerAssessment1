@@ -96,7 +96,7 @@ as.data.frame(totalstepsperday)
 hist(totalstepsperday, breaks = 10, xlab = "Number of Steps", ylab = "Frequency", main = "Total Steps Taken Per Day", col = colorRampPalette(brewer.pal(5, "Greens"))(11))
 ```
 
-![](PA1_template_files/figure-html/Histogram Total Steps-1.png)<!-- -->
+![](PA1_template_files/figure-html/Histogram_Total_Steps-1.png)<!-- -->
 
 ### To calculate mean and median number of steps per day
 
@@ -130,7 +130,7 @@ avgstepsperday <- tapply(cleandata$steps, cleandata$interval, mean)
 plot(as.numeric(names(avgstepsperday)), avgstepsperday, type = "l", xlab = "Interval", ylab = "Average Steps", main = "Average Steps Per Time Interval")
 ```
 
-![](PA1_template_files/figure-html/Time-series Plot of Average Steps Across Intervals-1.png)<!-- -->
+![](PA1_template_files/figure-html/Time-series_Plot_of_Average_Steps_Across_Intervals-1.png)<!-- -->
 
 ### Which 5-min interval contains the maximum number of steps on average?
 maxavgsteps gives the max of the interval and maxavgstepsinterval gives the interval in which that max occurs (second number (104) in maxavgstepsinterval gives the factor number the 835 interval is at).
@@ -190,7 +190,7 @@ hist(totalstepsperday, breaks = 10, xlab = "Number of Steps", ylab = "Frequency"
 hist(newtotalstepsperday, breaks = 10, xlab = "Number of Steps", ylab = "Frequency", main = "Activity Data with NAs Imputted", col = colorRampPalette(brewer.pal(5, "Blues"))(11))
 ```
 
-![](PA1_template_files/figure-html/Histogram with NAs Imputted-1.png)<!-- -->
+![](PA1_template_files/figure-html/Histogram_with_NAs_Imputted-1.png)<!-- -->
 
 ### To calculate new mean and median total number of steps per day
 
@@ -239,4 +239,4 @@ plot(as.numeric(names(avgstepsperweekday)), avgstepsperweekday, type = "l", xlab
 plot(as.numeric(names(avgstepsperweekend)), avgstepsperweekend, type = "l", xlab = "Interval", ylab = "Average Steps", main = "Average Steps Per Time Interval on a Weekend")
 ```
 
-![](PA1_template_files/figure-html/Time Series Plot of Weekday vs. Weekend-1.png)<!-- -->
+![](PA1_template_files/figure-html/Time_Series_Plot_of_Weekday_vs_Weekend-1.png)<!-- -->
